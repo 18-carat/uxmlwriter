@@ -1,10 +1,10 @@
 [package]
 name = "uxmlwriter"
-version = "0.2.0"
+version = "1.0.0"
 edition = "2021"
 authors = ["Madeleine Maria Ilyinichna"]
 license = "BSD-3-Clause"
-description = "A tiny almost-drop-in replacement for xmlwriter"
+description = "A tiny drop-in replacement for xmlwriter"
 keywords = ["xml"]
 repository = "https://github.com/18-carat/uxmlwriter"
 

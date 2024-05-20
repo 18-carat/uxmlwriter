@@ -72,8 +72,8 @@ impl<T: Write> XmlWriter<T> {
         }
     }
 
-    pub fn write_attribute<U: Display>(&mut self, key: &str, value: U) {
-        self.write(format!(" {}=\"{}\"", key, value).as_str());
+    pub fn write_attribute<U: Display>(&mut self, key: &str, val: U) {
+        self.write(format!(" {}=\"{}\"", key, Self::xml_encode(val)).as_str());
     }
 
     pub fn write_text<U: Display>(&mut self, text: U) {
@@ -82,7 +82,7 @@ impl<T: Write> XmlWriter<T> {
             self.status = Status::Inside;
         }
 
-        self.write(&text.to_string());
+        self.write(&Self::xml_encode(text));
     }
 
     pub fn write_comment(&mut self, comment: &str) {
@@ -115,5 +115,14 @@ impl<T: Write> XmlWriter<T> {
     fn indent(&mut self) {
         self.write("\n");
         (0..self.tags.len()).for_each(|_| self.write("    "));
+    }
+
+    fn xml_encode<U: Display>(text: U) -> String {
+        text.to_string()
+            .replace('&', "&amp;")
+            .replace('<', "&lt;")
+            .replace('>', "&gt;")
+            .replace('"', "&quot;")
+            .replace('\'', "&apos;")
     }
 }
